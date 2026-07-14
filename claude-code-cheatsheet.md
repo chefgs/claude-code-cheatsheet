@@ -189,7 +189,7 @@ Prefix any command with `!` to run it as a shell command and pipe output directl
 ### Understanding the Budget
 
 ```
-/cost                     # see current session usage
+/usage (cost)                     # see current session usage
 ```
 
 - **~200k token context** in most sessions — enough for ~150KB of code + conversation
