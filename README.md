@@ -1,6 +1,29 @@
 # Claude Code Cheatsheet 🚀
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![GitHub stars](https://img.shields.io/github/stars/chefgs/claude-code-cheatsheet?style=social)](https://github.com/chefgs/claude-code-cheatsheet/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/chefgs/claude-code-cheatsheet?style=social)](https://github.com/chefgs/claude-code-cheatsheet/network/members)
+[![GitHub issues](https://img.shields.io/github/issues/chefgs/claude-code-cheatsheet)](https://github.com/chefgs/claude-code-cheatsheet/issues)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/chefgs/claude-code-cheatsheet/pulls)
+[![Last Commit](https://img.shields.io/github/last-commit/chefgs/claude-code-cheatsheet)](https://github.com/chefgs/claude-code-cheatsheet/commits/main)
+[![Node.js >= 18](https://img.shields.io/badge/node-%3E%3D18-brightgreen.svg)](https://nodejs.org/)
+
 A comprehensive quick-reference guide for [Claude Code](https://claude.ai/code) — Anthropic's AI-powered coding assistant. All commands, shortcuts, flags, prompting patterns, and workflows in one place.
+
+---
+
+## Table of Contents
+
+- [What's Inside](#whats-inside)
+- [Quick Install](#quick-install)
+- [How to Use](#how-to-use)
+- [Highlights](#highlights)
+  - [Code Review — One Command](#code-review--one-command)
+  - [Security Audit in One Line](#security-audit-in-one-line)
+  - [Background Agent — Fire and Forget](#background-agent--fire-and-forget)
+  - [Pipe Logs Into Claude](#pipe-logs-into-claude)
+- [Contributing](#contributing)
+- [License](#license)
 
 ---
 
