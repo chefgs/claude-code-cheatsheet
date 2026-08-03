@@ -170,6 +170,72 @@ cat error.log | claude -p "What's wrong?"       # pipe input into Claude
 claude -p --json "List all TODOs" > todos.json  # machine-readable JSON output
 ```
 
+### Code Review via CLI
+
+Run a code review from your shell — no interactive session needed:
+
+```bash
+# Quick review of current working-tree changes
+claude -p "/code-review"
+
+# Review and auto-apply fixes (no prompts — good for CI)
+claude -p "/code-review --fix" --dangerously-skip-permissions
+
+# Low / high detail passes
+claude -p "/code-review low"   # faster, high-confidence findings only
+claude -p "/code-review high"  # thorough, broader coverage
+
+# Review a specific file
+claude -p "Review src/auth/middleware.ts for bugs and suggest improvements"
+
+# Pipe a diff and review it
+git diff HEAD~1 | claude -p "Review this diff for logic errors and edge cases"
+
+# Save review output to a file
+claude -p "/code-review" > review-$(date +%Y%m%d).txt
+
+# Review and post findings as PR comments (requires GitHub integration)
+claude -p "/code-review --comment" --dangerously-skip-permissions
+```
+
+### Security Review via CLI
+
+Audit your branch for vulnerabilities without opening an interactive session:
+
+```bash
+# Full security audit of pending branch changes
+claude -p "/security-review"
+
+# Security review with output saved to a report
+claude -p "/security-review" > security-report-$(date +%Y%m%d).txt
+
+# Pipe a specific file for a targeted audit
+cat src/api/auth.py | claude -p "Perform a security review of this file. Check for injection, auth bypass, and insecure defaults."
+
+# Review for a specific vulnerability class
+claude -p "Check src/ for any SQL injection vulnerabilities. List file:line and the unsafe pattern."
+
+# Review secrets / credential leaks before a commit
+git diff --staged | claude -p "Check this diff for accidentally committed secrets, API keys, or credentials."
+
+# Run security review as a background agent
+claude --bg "/security-review" --dangerously-skip-permissions
+claude agents    # check when it's done
+```
+
+### Deep / Ultra Review via CLI
+
+```bash
+# Cloud-based deep PR review (billed separately)
+claude -p "/ultrareview"
+
+# Compare against a specific branch
+claude -p "/ultrareview main"
+
+# Save the ultra-review report
+claude -p "/ultrareview" > ultrareview-$(date +%Y%m%d).txt
+```
+
 ### Session & Agent Management
 
 ```bash
@@ -215,6 +281,36 @@ claude daemon stop --any               # stop any daemon process (use with care)
 | `--forward-subagent-text` | Include subagent text in stream-json output |
 | `--ax-screen-reader` | Enable screen reader accessibility mode |
 | `--dangerously-skip-permissions` | Skip all permission prompts (CI/automation only) |
+
+### CI / Automation Recipes
+
+Wire Claude Code into your pipeline for automated reviews on every PR:
+
+```yaml
+# GitHub Actions — code review on every pull request
+- name: Claude Code Review
+  run: claude -p "/code-review" --dangerously-skip-permissions
+  env:
+    ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+```
+
+```yaml
+# GitHub Actions — security audit on every push to main
+- name: Claude Security Review
+  run: claude -p "/security-review" --dangerously-skip-permissions > security-report.txt
+  env:
+    ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+- uses: actions/upload-artifact@v4
+  with:
+    name: security-report
+    path: security-report.txt
+```
+
+```bash
+# Pre-commit hook: block commits that introduce secrets
+#!/usr/bin/env bash
+git diff --staged | claude -p "Does this diff contain any secrets, API keys, or credentials? Reply YES or NO only." | grep -qi "^yes" && { echo "Secrets detected — commit blocked."; exit 1; }
+```
 
 ---
 
