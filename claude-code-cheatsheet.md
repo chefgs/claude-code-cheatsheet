@@ -323,8 +323,8 @@ Run a code review from your shell — no interactive session needed:
 # Quick review of current working-tree changes
 claude -p "/code-review"
 
-# Review and auto-apply fixes (no prompts — good for CI)
-claude -p "/code-review --fix" --dangerously-skip-permissions
+# Review and auto-apply fixes
+claude -p "/code-review --fix"
 
 # Low / high detail passes
 claude -p "/code-review low"   # faster, high-confidence findings only
@@ -340,7 +340,7 @@ git diff HEAD~1 | claude -p "Review this diff for logic errors and edge cases"
 claude -p "/code-review" > review-$(date +%Y%m%d).txt
 
 # Review and post findings as PR comments (requires GitHub integration)
-claude -p "/code-review --comment" --dangerously-skip-permissions
+claude -p "/code-review --comment"
 ```
 
 ### Security Review via CLI
@@ -364,7 +364,7 @@ claude -p "Check src/ for any SQL injection vulnerabilities. List file:line and 
 git diff --staged | claude -p "Check this diff for accidentally committed secrets, API keys, or credentials."
 
 # Run security review as a background agent
-claude --bg "/security-review" --dangerously-skip-permissions
+claude --bg "/security-review"
 claude agents    # check when it's done
 ```
 

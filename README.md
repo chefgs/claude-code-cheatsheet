@@ -94,14 +94,14 @@ You can also paste the cheatsheet directly into a Claude Code session to give Cl
 # Interactive (inside Claude Code session)
 /code-review --fix       # review AND auto-fix
 
-# Headless / CI
-claude -p "/code-review" --dangerously-skip-permissions
+# Headless / one-shot
+claude -p "/code-review"
 ```
 
 ### Security Audit in One Line
 
 ```bash
-claude -p "/security-review" --dangerously-skip-permissions
+claude -p "/security-review"
 ```
 
 ### Background Agent — Fire and Forget
