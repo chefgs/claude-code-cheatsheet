@@ -4,6 +4,151 @@
 
 ---
 
+## Installation & Access Methods
+
+Claude Code can be accessed in four ways. All methods share the same underlying model and slash-command surface.
+
+---
+
+### 1 — Terminal / CLI (primary method)
+
+**Prerequisites:** Node.js 18+ and npm.
+
+```bash
+# Install globally
+npm install -g @anthropic-ai/claude-code
+
+# Authenticate (browser OAuth or API key)
+claude login
+
+# Start an interactive session in your project
+cd my-project
+claude
+```
+
+**Check & update:**
+```bash
+claude --version          # show installed version
+claude update             # update to latest
+claude doctor             # diagnose any install issues
+```
+
+**Uninstall:**
+```bash
+npm uninstall -g @anthropic-ai/claude-code
+```
+
+> **Tip:** Set `ANTHROPIC_API_KEY` in your shell profile (`~/.zshrc` / `~/.bashrc`) to avoid re-authenticating on every session:
+> ```bash
+> export ANTHROPIC_API_KEY="sk-ant-..."
+> ```
+
+---
+
+### 2 — VS Code Extension
+
+Install the **Claude Code** extension from the VS Code Marketplace to get an embedded panel inside your editor.
+
+**Via the VS Code UI:**
+1. Open VS Code → Extensions (`Ctrl+Shift+X` / `Cmd+Shift+X`)
+2. Search `Claude Code`
+3. Click **Install**
+
+**Via the command line:**
+```bash
+code --install-extension anthropic.claude-code
+```
+
+**Via the VS Code Quick Open:**
+```
+Ctrl+P  →  ext install anthropic.claude-code
+```
+
+**Key VS Code features:**
+| Feature | How to use |
+|---|---|
+| Open Claude panel | `Ctrl+Shift+P` → "Claude Code: Open" |
+| Chat in sidebar | Click the Claude icon in the Activity Bar |
+| Attach open file | Type `@` in the chat input and select the file |
+| Accept / reject inline edits | Diff view appears in editor — click ✓ or ✗ |
+| Run a slash command | Type `/` in the Claude chat panel |
+
+> The VS Code extension shares the same CLI binary — install the npm package first and the extension will detect it automatically.
+
+---
+
+### 3 — Desktop Application (macOS / Windows / Linux)
+
+Claude Code ships as a standalone desktop app, useful when you prefer a dedicated window outside your editor.
+
+**Install:**
+
+| Platform | Method |
+|---|---|
+| **macOS** | Download `.dmg` from [claude.ai/download](https://claude.ai/download), drag to Applications |
+| **Windows** | Download `.exe` installer from [claude.ai/download](https://claude.ai/download), run setup |
+| **Linux** | Download `.AppImage` or `.deb` from [claude.ai/download](https://claude.ai/download) |
+
+**Or install via package managers:**
+```bash
+# macOS — Homebrew
+brew install --cask claude-code
+
+# Windows — winget
+winget install Anthropic.ClaudeCode
+
+# Linux — snap
+sudo snap install claude-code
+```
+
+**First launch:**
+1. Open the Claude Code app
+2. Sign in with your Anthropic account or paste your API key
+3. Use **File → Open Folder** (or drag a folder onto the window) to set your working directory
+4. Start chatting — all slash commands and `!` shell escapes work the same as in the terminal
+
+---
+
+### 4 — Mobile App (iOS & Android)
+
+The Claude mobile app includes a **Code** mode that lets you interact with Claude Code on the go — useful for reviewing, asking questions, or light edits when away from a desktop.
+
+**Install:**
+
+| Platform | Link |
+|---|---|
+| **iOS** | [App Store — Claude by Anthropic](https://apps.apple.com/app/claude-by-anthropic/id6473753684) |
+| **Android** | [Google Play — Claude](https://play.google.com/store/apps/details?id=com.anthropic.claude) |
+
+**Activate Code mode:**
+1. Open the Claude app
+2. Tap the **⊕** (compose) button to start a new conversation
+3. Tap the **`</>` Code** toggle in the input bar to switch to Code mode
+4. Paste code, describe your task, or share a file from your device
+
+**Mobile capabilities:**
+- Full slash-command support (`/code-review`, `/security-review`, etc.)
+- Attach files from device storage or cloud drives
+- Syntax-highlighted code responses
+- Copy code blocks with one tap
+- Continue sessions started on desktop (conversation sync)
+
+> **Limitation:** The mobile app does not have direct terminal access or filesystem write access. Use it for review, planning, and code generation — apply changes on your desktop.
+
+---
+
+### Choosing the Right Method
+
+| Scenario | Best method |
+|---|---|
+| Everyday development, terminal-first workflow | **Terminal / CLI** |
+| Working inside VS Code | **VS Code Extension** |
+| Prefer a dedicated app window, non-VS Code editors | **Desktop App** |
+| On the go, reviewing code, quick questions | **Mobile App** |
+| CI/CD pipelines, scripted automation | **Terminal / CLI** (`claude -p`) |
+
+---
+
 ## Built-in Slash Commands
 
 ### Tier 1 — Daily Drivers

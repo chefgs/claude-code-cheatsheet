@@ -8,6 +8,7 @@ A comprehensive quick-reference guide for [Claude Code](https://claude.ai/code) 
 
 | Section | Description |
 |---|---|
+| **Installation & Access Methods** | Terminal/CLI, VS Code extension, desktop app, and mobile app — with install steps and a comparison table |
 | **Built-in Slash Commands** | `/clear`, `/compact`, `/model`, `/plan`, and every other built-in command, tiered by frequency |
 | **Skills (Agent Commands)** | `/code-review`, `/security-review`, `/ultrareview`, `/verify`, `/simplify`, and more |
 | **Keyboard Shortcuts** | Terminal key bindings for faster navigation and control |
@@ -22,6 +23,23 @@ A comprehensive quick-reference guide for [Claude Code](https://claude.ai/code) 
 | **Hooks System** | Intercept tool calls with custom scripts |
 | **CLAUDE.md — Project Memory** | Auto-loaded project context, memory scopes, imports |
 | **Quick Reference Card** | One-screen cheat card for daily use |
+
+---
+
+## Quick Install
+
+```bash
+# 1. Install the CLI (Node.js 18+ required)
+npm install -g @anthropic-ai/claude-code
+
+# 2. Authenticate
+claude login
+
+# 3. Start in your project
+cd my-project && claude
+```
+
+For VS Code, desktop app, and mobile installation see the **[Installation & Access Methods](./claude-code-cheatsheet.md#installation--access-methods)** section of the cheatsheet.
 
 ---
 
