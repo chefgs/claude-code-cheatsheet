@@ -15,6 +15,7 @@
 | `/cost` | Show tokens spent + estimated cost for this session | `/cost` |
 | `/model` | Switch model mid-session | `/model claude-opus-5` |
 | `/config` | Open interactive settings (model, theme, permissions, workflow size) | `/config` |
+| `/config key=value` | Set a setting inline without opening the full panel | `/config model=claude-opus-5` |
 | `/context` | Show context window usage; warns when conversation exceeds limit | `/context` |
 | `/plan` | Enter plan mode — Claude proposes a plan before executing | `/plan` |
 
@@ -46,6 +47,9 @@
 | `/logout` | Sign out of current session | `/logout` |
 | `/install-github-app` | Install the Claude GitHub App for PR integration | `/install-github-app` |
 | `/usage-credits` | Request usage credits from your org admin | `/usage-credits` |
+| `/voice` | Toggle voice dictation (requires SoX on Linux) | `/voice` |
+| `/remote-control` | Share session link so web/mobile viewers can watch or interact | `/remote-control` |
+| `/teleport` | Jump into a remote cloud session | `/teleport` |
 
 ---
 
@@ -363,11 +367,11 @@ Disable with `"emojiCompletionEnabled": false` in settings.
 | Task | Best model | Command |
 |---|---|---|
 | Quick edits, formatting, rename | Haiku 4.5 | `/model claude-haiku-4-5` |
-| Feature implementation, review | Sonnet 4.6 (default) | `/model claude-sonnet-4-6` |
+| Feature implementation, review | Sonnet 5 (default) | `/model claude-sonnet-5` |
 | Architecture, complex reasoning | Opus 4.8 | `/model claude-opus-4-8` |
 | Long research + synthesis, 1M ctx | Opus 5 (latest) | `/model claude-opus-5` |
 
-Switch back after heavy tasks: `/model claude-sonnet-4-6`
+Switch back after heavy tasks: `/model claude-sonnet-5`
 
 ---
 
@@ -410,6 +414,29 @@ Turn 3: "The token should expire in 1 hour, not 24 — update just that constant
  (3) where the API routes are registered. List file paths only."
 ```
 
+### Extended Thinking Keywords
+
+Trigger deeper reasoning by adding these words to your prompt:
+
+| Keyword | Thinking depth |
+|---|---|
+| `think` | Normal extended thinking |
+| `think harder` / `think more` | Deeper thinking |
+| `ultrathink` | Maximum thinking budget |
+
+```
+"ultrathink — design a zero-downtime migration strategy for this schema change"
+"think harder about edge cases in the rate limiter"
+```
+
+### Stacked Slash Skills
+
+Chain multiple skills in a single invocation — they run sequentially, each using the prior skill's result as its target:
+
+```
+/code-review /simplify /verify    # review, then simplify, then verify in sequence
+```
+
 ---
 
 ## Background Agents & Multi-Agent Workflows
@@ -444,6 +471,7 @@ CLAUDE_CODE_MAX_CONCURRENT_SUBAGENTS=10   # cap parallel subagents (default: 20)
 CLAUDE_CODE_MAX_SUBAGENTS_PER_SESSION=50  # cap total spawns per session (default: 200)
 CLAUDE_CODE_MAX_SUBAGENT_SPAWN_DEPTH=2    # allow nested subagents (default: 3)
 CLAUDE_CODE_MAX_WEB_SEARCHES_PER_SESSION=100  # prevent search loops (default: 200)
+CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1    # enable experimental agent teams feature
 ```
 
 ---
@@ -486,8 +514,8 @@ Hooks let you intercept Claude's tool calls with custom scripts, with exit code 
 | Exit code | Meaning |
 |---|---|
 | `0` | Proceed normally |
-| `1` | Log error, continue |
-| `2` | Block the tool call (with JSON reason in stdout) |
+| `1` | Show stderr to user (warning), but allow tool to continue |
+| `2` | Block the tool call — show stderr to Claude so it can correct |
 
 ### Common Hook Events
 
@@ -545,6 +573,28 @@ Configure via natural language: `/update-config block all git push --force comma
 ```
 
 Generate one for any project with: `/init`
+
+### Memory Scopes
+
+| Scope | Location | Loaded when |
+|---|---|---|
+| User (global) | `~/.claude/CLAUDE.md` | All sessions |
+| Project | `<repo>/CLAUDE.md` | In-project sessions |
+| Rules | `<repo>/.claude/rules/*.md` | Conditionally per path |
+| Team | `CLAUDE_MEMORY_STORES` env path | Shared team sessions |
+
+```bash
+# Share memory stores across a team:
+export CLAUDE_MEMORY_STORES=/shared/team-memory/CLAUDE.md
+```
+
+### CLAUDE.md Imports
+
+```markdown
+# Pull in additional shared files:
+@.claude/team-standards.md
+@docs/api-conventions.md
+```
 
 ---
 
