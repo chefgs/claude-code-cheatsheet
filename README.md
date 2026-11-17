@@ -22,7 +22,7 @@ A comprehensive quick-reference guide for [Claude Code](https://claude.ai/code) 
   - [Security Audit in One Line](#security-audit-in-one-line)
   - [Background Agent — Fire and Forget](#background-agent--fire-and-forget)
   - [Pipe Logs Into Claude](#pipe-logs-into-claude)
-- [Working Practices for Long Sessions](#working-practices-for-long-sessions)
+- [Working Practices for Long Sessions](./claude-code-cheatsheet.md/#working-practices-for-long-sessions)
 - [Contributing](#contributing)
 - [License](#license)
 
