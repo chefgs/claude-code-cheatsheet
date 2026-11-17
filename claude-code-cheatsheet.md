@@ -839,6 +839,86 @@ export CLAUDE_MEMORY_STORES=/shared/team-memory/CLAUDE.md
 
 ---
 
+## Working Practices for Long Sessions
+
+Patterns that matter once a session runs past a few dozen turns. They come from
+agentic sessions going wrong, not from the docs.
+
+### Instructions decay with session length — gates do not
+
+A rule in `CLAUDE.md` is strongest at turn 1 and weakest at turn 50, exactly inverted
+from when you need it. By then the accumulated **pattern** of behaviour outweighs any
+single stated rule: forty accepted examples of "analyse, then act" is few-shot
+prompting against one sentence saying "ask first."
+
+| Mechanism | Strength | Why |
+|---|---|---|
+| `CLAUDE.md` rule | advisory | competes with session momentum, and loses |
+| Plan mode (`Shift+Tab`) | **hard** | edits and mutating commands are blocked, not discouraged |
+| `PreToolUse` hook | **hard** | sees every tool call before it runs and can deny it |
+| `permissions.deny` in `settings.json` | **hard** | the tool never fires |
+
+**Practice:** put anything that must not happen behind a gate. Keep `CLAUDE.md` for
+things that merely *should* happen.
+
+### Define consent semantics in `CLAUDE.md`
+
+The common failure is not misread intent — it is misread **authority**. Knowing the
+right action slides into being allowed to take it. Spell it out:
+
+```markdown
+- Approval applies to one step and expires with the message that gave it.
+- A correction, clarification or new fact is NOT a go-ahead.
+- Narrowing scope is still planning.
+- Proceed unasked only for read-only inspection.
+```
+
+Ambiguity resolves toward action by default, because "useful" registers as *finished*
+far more than as *waited*.
+
+### Re-assert near the risky step
+
+A constraint restated in the turn before an irreversible action carries far more
+weight than the same constraint forty turns back. Inelegant, effective.
+
+### Context lives in files; momentum lives in the session
+
+Momentum is the behavioural groove — it exists only inside a session and it is what
+you want to discard. Decisions, rationale and open items belong in files, and survive.
+
+| Action | Resets momentum | Keeps context |
+|---|---|---|
+| `/clear` + fresh start | fully | only what is on disk |
+| `/compact` | partially — turns compress into facts | yes |
+| Keep going | no | yes |
+
+**Practice:** write the handoff as you go. The test is *if this session ended right
+now, could a fresh one pick up?* Once that is true, **session length becomes
+something you control** instead of something you suffer.
+
+What does not transfer and must be written deliberately: open questions in flight,
+and *calibration* — how you want the assistant to work. That is what `CLAUDE.md` and
+persistent memory are for.
+
+### Verify the artifact, not the exit code
+
+A failed run reported as "exit 0" is usually a pipeline's status, not the program's —
+`cmd | grep ...` returns `grep`'s code. If a step should produce a file, check for
+the file.
+
+### Untested documentation is not verified
+
+A runbook instructing a fallback that was never implemented looks authoritative and
+describes nothing. Periodically **run** your runbooks.
+
+### Keep predictions and measurements visually separate
+
+"I expect X, not yet measured" and "X, measured" must never read the same in output
+or in docs. Reasoning delivered in the voice of a measurement is the costliest kind
+of error, because work gets planned around it.
+
+---
+
 ## Quick Reference Card
 
 ```

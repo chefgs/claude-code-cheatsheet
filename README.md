@@ -22,6 +22,7 @@ A comprehensive quick-reference guide for [Claude Code](https://claude.ai/code) 
   - [Security Audit in One Line](#security-audit-in-one-line)
   - [Background Agent — Fire and Forget](#background-agent--fire-and-forget)
   - [Pipe Logs Into Claude](#pipe-logs-into-claude)
+- [Working Practices for Long Sessions](#working-practices-for-long-sessions)
 - [Contributing](#contributing)
 - [License](#license)
 
@@ -45,6 +46,7 @@ A comprehensive quick-reference guide for [Claude Code](https://claude.ai/code) 
 | **MCP (Model Context Protocol)** | Configuring and using MCP servers |
 | **Hooks System** | Intercept tool calls with custom scripts |
 | **CLAUDE.md — Project Memory** | Auto-loaded project context, memory scopes, imports |
+| **Working Practices for Long Sessions** | Why `CLAUDE.md` rules decay as a session grows and which mechanisms are actually enforced, consent semantics, when to `/clear` vs `/compact`, and verification habits |
 | **Quick Reference Card** | One-screen cheat card for daily use |
 
 ---
